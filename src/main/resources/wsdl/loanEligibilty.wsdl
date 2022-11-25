@@ -1,0 +1,72 @@
+<wsdl:definitions
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://www.kumar.com/soap/api/xsd"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.kumar.com/soap/api/xsd"
+	targetNamespace="http://www.kumar.com/soap/api/xsd">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.kumar.com/soap/api/xsd">
+			<xsd:element name="CustomerRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="customerID" type="xsd:int" />
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="customerName" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="0"
+							name="address" type="xsd:string" />
+						<xsd:element maxOccurs="1" minOccurs="1" name="age"
+							type="xsd:int" />
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="yearlyIncome" type="xsd:long" />
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="cibilScore" type="xsd:int" />
+						<xsd:element maxOccurs="1" minOccurs="0"
+							name="employmentMode" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Feedback">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="isEligible" type="xsd:boolean" />
+						<xsd:element name="approvedAmount" type="xsd:long" />
+						<xsd:element maxOccurs="unbounded" minOccurs="0"
+							name="criteriaMismatch" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="CustomerRequest">
+		<wsdl:part element="tns:CustomerRequest"
+			name="CustomerRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="LoanEligibilty">
+		<wsdl:operation name="Customer">
+			<wsdl:input message="tns:CustomerRequest"
+				name="CustomerRequest">
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LoanEligibiltySoap11"
+		type="tns:LoanEligibilty">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Customer">
+			<soap:operation soapAction="" />
+			<wsdl:input name="CustomerRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoanEligibiltyService">
+		<wsdl:port binding="tns:LoanEligibiltySoap11"
+			name="LoanEligibiltySoap11">
+			<soap:address location="http://localhost:8080/ws" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
